@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Booking App</title>
+    </head>
+    <body>
+        <h1>Appointment Booking App</h1>
+        <form id = 'form'>
+            Name:<input type = "text" id = '123' name="Name"/>
+            Enter your gmail id :<input type = 'email' id="124" name="gmail"/>
+            <input type = "submit" value = "Submit"/>
+        </form>
+        <ul id = 'list of users'> </ul>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+        <script>
+            var form =document.getElementById('form')
+            form.addEventListener('submit', function(event){
+                event.preventDefault()
+                //get the value of Name
+                var name = document.getElementById('123').value
+                //get the email id
+                email = document.getElementById('124').value
+                //create new li
+                var li = document.createElement('li')
+                //add class name to li
+                li.className = 'list-group-items';
+                //new text Node
+                li.appendChild(document.createTextNode(name+" "+email))
+                const obj={
+                    name,
+                    email
+                }
+                axios.post('https://crudcrud.com/api/2799abbc80a7492a8272e92788c51c89/appointmentData',obj)
+                .then((respone)=>{
+                    console.log(respone)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+            })
+            window.addEventListener('DOMContentLoaded',()=>{
+                axios.get(' https://crudcrud.com/api/2799abbc80a7492a8272e92788c51c89/appointmentData')
+                .then((response)=>{
+                    console.log(response)
+
+                    for(var i = 0 ; response.data.length; i++){
+                        showNewUserOnScreen(response.data[i])
+                    }
+                })
+                .catch((error)=>{
+                    console.log(error)
+                })
+            })
+        
+        </script>
+    </body>
+</html>
